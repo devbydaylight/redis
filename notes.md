@@ -43,9 +43,26 @@ $ sudo apt-get install redis
 ```
 According to redis [documentation](https://redis.io/topics/quickstart), installing from source is the recommended way to install. 
 
-
+To start the redis-server just run redis-server without any arguments:
+```
+$ redis-server
+```
+Doing this without any arguments will start redis-server in the shell and you will have to CTRL+C to get out of it, which kills the redis-server process. This method is fine for testing basic functionality and I even just put the process in the background with the ampersand so I could test redis-cli functionality. You can use 'ps' or 'jobs' commands to check on the process:
+```
+$ redis-server &
+$ ps auxf | grep redis
+$ jobs -l
+```
+To specify a configuration file just add path to config file to your redis-server command:
+```
+$ redis-server /path/to/config/file
+```
 
 ## configuring replication between 2 nodes
+
+## replication theory
+
+## redis configuration
 
 ## redis-cli installation (client node)
 Process is identical to redis-server installation. You can copy just the redis-cli binary from the src/ directory to a local location in your users $PATH variable to run locally without having to change directory into redis-stable/ directory.
