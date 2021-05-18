@@ -1,5 +1,17 @@
 # Redis notes
 
+## what is redis?
+An in-memory data structure store that supports the storing of multiple data types including:
+- strings
+- lists
+- sets
+- sorted sets
+- hashes
+- streams
+- bit arrays
+- hyperlog logs
+
+It should also be noted that Redis is not strictly a key-value store since it supports multiple complex data types and isn't limited to just key-value strings.
 ## redis-server installation
 For latest stable version of redis server use the following command:
 
@@ -63,6 +75,14 @@ $ redis-server /path/to/config/file
 ## replication theory
 
 ## redis configuration
+Can call redis server using 'redis-server' command with no additional arguments to use default configuration file. The template for redis config file can be found in the redis-stable root directory (e.g. ~/redis-stable/redis.conf).
+```
+$ redis-server
+```
+You can pass configuration parameters via the cli command directly:
+```
+$ redis-server --port 6380 --slaveof 1.2.3.4 --port 6379
+```
 
 ## redis-cli installation (client node)
 Process is identical to redis-server installation. You can copy just the redis-cli binary from the src/ directory to a local location in your users $PATH variable to run locally without having to change directory into redis-stable/ directory.
