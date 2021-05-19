@@ -166,11 +166,11 @@ Process is identical to redis-server installation. You can copy just the redis-c
 ## logging
 
 ## helpful links
-[Redis Quickstart](https://redis.io/topics/quickstart)
-[Redis configuration file example for 6.0](https://raw.githubusercontent.com/redis/redis/6.0/redis.conf)
-[Full list of Redis commands](https://redis.io/commands#)
-[Data structures](https://redis.io/topics/data-types-intro)
-[Persistence](https://redis.io/topics/persistence)
-[Eviction Policies 1](https://redis.io/topics/lru-cache)
-[Eviction Policies 2](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/)
-[Benchmarking](https://redis.io/topics/benchmarks)
+-[Redis Quickstart](https://redis.io/topics/quickstart)
+-[Redis configuration file example for 6.0](https://raw.githubusercontent.com/redis/redis/6.0/redis.conf)
+-[Full list of Redis commands](https://redis.io/commands#)
+-[Data structures](https://redis.io/topics/data-types-intro)
+-[Persistence](https://redis.io/topics/persistence)
+-[Eviction Policies 1](https://redis.io/topics/lru-cache)
+-[Eviction Policies 2](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/)
+-[Benchmarking](https://redis.io/topics/benchmarks)
