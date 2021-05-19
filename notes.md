@@ -69,6 +69,7 @@ To specify a configuration file just add path to config file to your redis-serve
 ```
 $ redis-server /path/to/config/file
 ```
+There is an example of a redis config file [here](https://raw.githubusercontent.com/redis/redis/6.0/redis.conf).
 
 ## configuring replication between 2 nodes
 
