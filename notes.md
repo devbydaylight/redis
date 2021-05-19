@@ -79,6 +79,11 @@ Redis replication has 3 critical components to the system:
 2. In situations when replica loses connection to master a reconnection is established to continue replicating with partial resync and attempt to retrieve lost commands during connection issues.
 3. If partial resync isn't possible, replica asks for full resync which involves master taking snapshot (backup??) of its data and sending to replica. Then sending commands via the stream for new changes made to dataset.
 
+### replication process
+Redis uses concept of replication ID and it is critical to understanding how replication works in redis. The replication ID acts as the representation of the dataset for a master. Every master has a replication ID. Included with that is an offset that increments based on the number of bytes of replication stream produced to send to the replicas for updates.
+
+Together, the replication ID and offset represent an exact version of the master dataset.
+
 There is support for both asynchronous and synchronous replication. By default asynchronous is in place and the replica periodically checks in with the master to confirm the amount of data that has been sent.
 ## redis configuration
 Can call redis server using 'redis-server' command with no additional arguments to use default configuration file. The template for redis config file can be found in the redis-stable root directory (e.g. ~/redis-stable/redis.conf).
