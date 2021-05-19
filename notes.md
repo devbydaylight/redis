@@ -72,6 +72,50 @@ $ redis-server /path/to/config/file
 There is an example of a redis config file [here](https://raw.githubusercontent.com/redis/redis/6.0/redis.conf).
 
 ## configuring replication between 2 nodes
+You can add the directive, replicaof <master node ip> <master port> to your redis.conf file to enable replication. Once complete you can start the redis-server on the replica node. Prior to starting redis-server on replica, do a 'tail -f /var/log/redis_6379.log' so you can observe what happens in the redis logs:
+
+From master
+```
+$ tail -f /var/log/redis_6379.log
+1979:M 19 May 2021 16:26:22.634 * Replica 172.31.20.229:6379 asks for synchronization
+1979:M 19 May 2021 16:26:22.634 * Full resync requested by replica 172.31.20.229:6379
+1979:M 19 May 2021 16:26:22.634 * Replication backlog created, my new replication IDs are '0ea26e54acff99670b58613a9680a37881efcc18' and '0000000000000000000000000000000000000000'
+1979:M 19 May 2021 16:26:22.634 * Starting BGSAVE for SYNC with target: disk
+1979:M 19 May 2021 16:26:22.634 * Background saving started by pid 3493
+3493:C 19 May 2021 16:26:22.638 * DB saved on disk
+3493:C 19 May 2021 16:26:22.638 * RDB: 0 MB of memory used by copy-on-write
+1979:M 19 May 2021 16:26:22.738 * Background saving terminated with success
+1979:M 19 May 2021 16:26:22.739 * Synchronization with replica 172.31.20.229:6379 succeeded
+```
+From replica
+```
+907:C 19 May 2021 16:26:22.625 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+907:C 19 May 2021 16:26:22.625 # Redis version=6.2.3, bits=64, commit=00000000, modified=0, pid=907, just started
+907:C 19 May 2021 16:26:22.625 # Configuration loaded
+907:S 19 May 2021 16:26:22.626 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+907:S 19 May 2021 16:26:22.626 * monotonic clock: POSIX clock_gettime
+907:S 19 May 2021 16:26:22.628 * Running mode=standalone, port=6379.
+907:S 19 May 2021 16:26:22.628 # Server initialized
+907:S 19 May 2021 16:26:22.628 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+907:S 19 May 2021 16:26:22.628 * Loading RDB produced by version 6.2.3
+907:S 19 May 2021 16:26:22.628 * RDB age 283 seconds
+907:S 19 May 2021 16:26:22.628 * RDB memory usage when created 0.83 Mb
+907:S 19 May 2021 16:26:22.628 * DB loaded from disk: 0.000 seconds
+907:S 19 May 2021 16:26:22.628 * Ready to accept connections
+907:S 19 May 2021 16:26:22.630 * Connecting to MASTER 172.31.28.194:6379
+907:S 19 May 2021 16:26:22.630 * MASTER <-> REPLICA sync started
+907:S 19 May 2021 16:26:22.630 * Non blocking connect for SYNC fired the event.
+907:S 19 May 2021 16:26:22.632 * Master replied to PING, replication can continue...
+907:S 19 May 2021 16:26:22.633 * Partial resynchronization not possible (no cached master)
+907:S 19 May 2021 16:26:22.635 * Full resync from master: 0ea26e54acff99670b58613a9680a37881efcc18:0
+907:S 19 May 2021 16:26:22.739 * MASTER <-> REPLICA sync: receiving 219 bytes from master to disk
+907:S 19 May 2021 16:26:22.739 * MASTER <-> REPLICA sync: Flushing old data
+907:S 19 May 2021 16:26:22.739 * MASTER <-> REPLICA sync: Loading DB in memory
+907:S 19 May 2021 16:26:22.743 * Loading RDB produced by version 6.2.3
+907:S 19 May 2021 16:26:22.743 * RDB age 0 seconds
+907:S 19 May 2021 16:26:22.743 * RDB memory usage when created 1.83 Mb
+907:S 19 May 2021 16:26:22.743 * MASTER <-> REPLICA sync: Finished with success
+```
 
 ## replication theory
 Redis replication has 3 critical components to the system:
