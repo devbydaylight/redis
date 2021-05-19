@@ -153,7 +153,15 @@ You can then log into the host whose configuration you just changed and check th
 ## redis-cli installation (client node)
 Process is identical to redis-server installation. You can copy just the redis-cli binary from the src/ directory to a local location in your users $PATH variable to run locally without having to change directory into redis-stable/ directory.
 
+## eviction policies
+
+## data structures
+
+## persistence
+
 ## benchmark tool
+  
+## logging
 
 ## helpful links
 [Redis Quickstart](https://redis.io/topics/quickstart)
