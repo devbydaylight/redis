@@ -130,6 +130,8 @@ Together, the replication ID and offset represent an exact version of the master
 
 There is support for both asynchronous and synchronous replication. By default asynchronous is in place and the replica periodically checks in with the master to confirm the amount of data that has been sent.
   
+When replicas connect to master they use PSYNC cmd to send old replication ID/offsets that have been processed at that point in time. If the ID from the replica is not known a full sync happens which will give replica full dataset from master.
+  
 ## redis configuration
 Can call redis server using 'redis-server' command with no additional arguments to use default configuration file. The template for redis config file can be found in the redis-stable root directory (e.g. ~/redis-stable/redis.conf).
 ```
@@ -167,3 +169,8 @@ Process is identical to redis-server installation. You can copy just the redis-c
 [Redis Quickstart](https://redis.io/topics/quickstart)
 [Redis configuration file example for 6.0](https://raw.githubusercontent.com/redis/redis/6.0/redis.conf)
 [Full list of Redis commands](https://redis.io/commands#)
+[Data structures](https://redis.io/topics/data-types-intro)
+[Persistence](https://redis.io/topics/persistence)
+[Eviction Policies 1](https://redis.io/topics/lru-cache)
+[Eviction Policies 2](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/)
+[Benchmarking](https://redis.io/topics/benchmarks)
