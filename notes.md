@@ -74,7 +74,12 @@ There is an example of a redis config file [here](https://raw.githubusercontent.
 ## configuring replication between 2 nodes
 
 ## replication theory
+Redis replication has 3 critical components to the system:
+1. Master keeps replica updated by sending stream of commands to it to keep track of changes made to the dataset on master (e.g. writes, key expiration/eviction).
+2. In situations when replica loses connection to master a reconnection is established to continue replicating with partial resync and attempt to retrieve lost commands during connection issues.
+3. If partial resync isn't possible, replica asks for full resync which involves master taking snapshot (backup??) of its data and sending to replica. Then sending commands via the stream for new changes made to dataset.
 
+There is support for both asynchronous and synchronous replication. By default asynchronous is in place and the replica periodically checks in with the master to confirm the amount of data that has been sent.
 ## redis configuration
 Can call redis server using 'redis-server' command with no additional arguments to use default configuration file. The template for redis config file can be found in the redis-stable root directory (e.g. ~/redis-stable/redis.conf).
 ```
