@@ -129,6 +129,7 @@ Redis uses concept of replication ID and it is critical to understanding how rep
 Together, the replication ID and offset represent an exact version of the master dataset.
 
 There is support for both asynchronous and synchronous replication. By default asynchronous is in place and the replica periodically checks in with the master to confirm the amount of data that has been sent.
+  
 ## redis configuration
 Can call redis server using 'redis-server' command with no additional arguments to use default configuration file. The template for redis config file can be found in the redis-stable root directory (e.g. ~/redis-stable/redis.conf).
 ```
@@ -138,6 +139,16 @@ You can pass configuration parameters via the cli command directly:
 ```
 $ redis-server --port 6380 --slaveof 1.2.3.4 --port 6379
 ```
+If you want to change a configuration paramter on the fly without having to restart redis-server you can use CONFIG SET command. Do note that this will not write any changes to redis.conf file so if you were to reboot the node it would go back to using the previous configuration defined in redis.conf.
+  
+If you want to have the config change be written to redis.conf file on the fly without restarting, use the CONFIG REWRITE command after you have done the CONFIG SET change:
+```
+$ redis-cli -h <host ip> -p <port> config set <parameter> <new value>
+OK
+$ redis-cli -h <host ip> -p <port> config get <parameter you just changed>
+$ redis-cli -h <host ip> -p <port> config rewrite
+```
+You can then log into the host whose configuration you just changed and check the redis.conf file to confirm the changes were written to the file without having to do a reboot!
 
 ## redis-cli installation (client node)
 Process is identical to redis-server installation. You can copy just the redis-cli binary from the src/ directory to a local location in your users $PATH variable to run locally without having to change directory into redis-stable/ directory.
