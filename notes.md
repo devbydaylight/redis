@@ -157,13 +157,7 @@ Process is identical to redis-server installation. You can copy just the redis-c
 
 ## eviction policies
 
-## data structures
-
 ## persistence
-
-## benchmark tool
-  
-## logging
 
 ## helpful links
 - [Redis Quickstart](https://redis.io/topics/quickstart)
