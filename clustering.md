@@ -1,6 +1,18 @@
 # redis clustering
 A collection of notes on clustering in Redis.
 
+## architecture 
+```
+cluster
+  -> nodes
+    -> databases
+      -> shards
+```
+- **cluster** made of multiple nodes and can be spread across az's for rack awareness (multi az clusters).
+- **nodes** these nodes act as the underlying infrastructure the databases will be created on.
+- **databases** typically created by the user via the redis cloud portal or 
+
+
 ## general redis details
 - redis is single threaded process.
   - redis process is bound by cpu core using it.
@@ -25,6 +37,12 @@ A collection of notes on clustering in Redis.
   - cannot reduce number of shards once clustering is enabled.
   - if needed, can increase number of shards by multiple of chosen shard scheme.
 
+## memory limits
+- you can have replication enabled in redis without clustering.
+- when setting memory limit on databases you are setting max memory for all database replicas and shards.
+  - database replica shards for dbs with replication enabled.
+  - database shards for dbs with clustering enabled.
+
 ## database replication
 - in redis you can replicate dataset to replica shards.
 - in the event of a failure of the primary shard, replica shard is promoted to primary.
@@ -33,10 +51,17 @@ A collection of notes on clustering in Redis.
   - can replace/restore a broken master by adding a new node and recovering snapshots(???).
 
 ## ha configuration
-  - rack/zone awareness can be used as additional high availability mechanism that prevents nodes from sharing same rack.
+  - **rack/zone awareness** can be used as additional high availability mechanism that prevents nodes from sharing same rack.
     - this is good for people that want to have primary/replica nodes in different availability zones in cloud deployments.
-  - ha for replica shards.
+    - rack/zone awareness has to be configured at the cluster, node, and database levels.
+    - only really relevant for dbs that have replication enabled.
+    - even without rack awareness enabled on replicated databases, the master and slave shards will be placed on separate nodes.
+
+  - **ha for replica shards**.
     - replica shard gets migrated when nodes fail to keep the database up and available.
     - possible alternative option for deployment that doesn't allow for rack/zone awareness??
  
+## endpoints
+- master node can hold master shards within a database.
+- when a master node goes down, and the replica node is promoted, do the previous endpoints need to be bound to new master?
   
